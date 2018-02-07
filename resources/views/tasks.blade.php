@@ -54,7 +54,7 @@
             @foreach($tasks as $task)
             <div class="columns">
                 <div class="column is-one-third">
-                    <p class="title is-6 level-item">{{ $task->name }}</p>
+                    <p class="title is-6">{{ $task->name }}</p>
                 </div>
                 <div class="column is-one-third">
                     <div class="field is-grouped">
