@@ -30,7 +30,7 @@
                                     <div class="alert alert-danger">
                                         <ul>
                                             @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}'Task' is reqiured</li>
+                                                <li>{{ $error }}'Task' is required</li>
                                             @endforeach
                                         </ul>
                                     </div>
