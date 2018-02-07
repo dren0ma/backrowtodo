@@ -26,18 +26,21 @@ class TaskController extends Controller
         // Rule::in('task')]
     
 
-    $task = new Task();
-    $task->name = $request->task;
-    $task->save();
+        $task = new Task();
+        $task->name = $request->task;
+        $task->save();
 
-    Session::flash('status','Task was successfully added!');
+        Session::flash('statusA','Task was successfully added!');
 
-    return redirect('/tasks');
+        return redirect('/tasks');
     }
 
     function delete($id){
         $task = Task::find($id);
         $task->delete();
+
+        Session::flash('statusB','Task Deleted');
+
         return redirect('/tasks');
     }
 
