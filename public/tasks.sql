@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2018 at 07:26 AM
+-- Generation Time: Feb 08, 2018 at 09:30 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.2
 
@@ -23,6 +23,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `comment` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `task_id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `comment`, `task_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(3, 'asdasd', 2, 2, '2018-02-08 00:23:43', '2018-02-08 00:23:43'),
+(5, 'hahaha', 2, 2, '2018-02-08 00:30:21', '2018-02-08 00:30:21');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -37,9 +60,11 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2018_02_07_010932_create_tasks_table', 1);
+(16, '2014_10_12_000000_create_users_table', 1),
+(17, '2014_10_12_100000_create_password_resets_table', 1),
+(18, '2018_02_07_010932_create_tasks_table', 1),
+(19, '2018_02_08_024235_add_user_id', 1),
+(24, '2018_02_08_051703_create_comments_table', 2);
 
 -- --------------------------------------------------------
 
@@ -63,21 +88,17 @@ CREATE TABLE `tasks` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tasks`
 --
 
-INSERT INTO `tasks` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(2, 'EDIT ULIT', '2018-02-06 18:12:30', '2018-02-06 18:57:40'),
-(13, 'taskqweorqieroqwi', '2018-02-06 21:30:58', '2018-02-06 21:30:58'),
-(14, 'task qwerty', '2018-02-06 21:40:07', '2018-02-06 21:40:07'),
-(15, 'asdasTask', '2018-02-06 21:56:24', '2018-02-06 21:56:24'),
-(16, 'Task a', '2018-02-06 21:57:23', '2018-02-06 21:57:23'),
-(17, 'Task malaking t', '2018-02-06 21:58:38', '2018-02-06 21:58:38'),
-(18, 'Task hahaha', '2018-02-06 21:59:19', '2018-02-06 21:59:19');
+INSERT INTO `tasks` (`id`, `name`, `created_at`, `updated_at`, `user_id`) VALUES
+(2, 'Task Test', '2018-02-07 23:27:02', '2018-02-07 23:27:02', 2),
+(3, 'Task unggoy', '2018-02-08 00:15:29', '2018-02-08 00:15:29', 2);
 
 -- --------------------------------------------------------
 
@@ -96,8 +117,24 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'user', 'user@email.com', '$2y$10$3c9KwFDmBPLLZgWoRZBPB.GjKATl19s/EiR9E0QebSFYP7eCEchI2', 'xsHtYOMqNAwjWF5GgWGkLopT1oVJ6UUNBsYGwT6fGnplLQuXKHOQBWIPMc00', '2018-02-07 21:33:22', '2018-02-07 21:33:22'),
+(2, 'tuitt', 'tuitt@email.com', '$2y$10$XRBAMn4qHvoHFM7iTJItBemJF4gsDIjnzw58RzHvbJNVDtgtd9VtC', 'YvItGt3w2okTu39v1sts3tnQfBhkxUMhPPEIXH6O8O21QBthupO5gsehRZkX', '2018-02-07 21:33:46', '2018-02-07 21:33:46');
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `comments_user_id_foreign` (`user_id`),
+  ADD KEY `comments_task_id_foreign` (`task_id`);
 
 --
 -- Indexes for table `migrations`
@@ -115,7 +152,8 @@ ALTER TABLE `password_resets`
 -- Indexes for table `tasks`
 --
 ALTER TABLE `tasks`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tasks_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `users`
@@ -129,20 +167,42 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_task_id_foreign` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tasks`
+--
+ALTER TABLE `tasks`
+  ADD CONSTRAINT `tasks_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

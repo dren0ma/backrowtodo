@@ -25,6 +25,9 @@ Route::get('/tasks/{id}/addcomment', 'CommentController@showComment');
 
 Route::post('/tasks/{id}/addcomment', 'CommentController@addComment');
 
+Route::get('/tasks/{id}/delcomment', 'CommentController@delComment');
+
+
 
     
 

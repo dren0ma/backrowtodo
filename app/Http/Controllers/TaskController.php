@@ -20,7 +20,8 @@ class TaskController extends Controller
 
 
     function show(){
-        $tasks = Auth::user()->tasks;
+        // $tasks = Auth::user()->tasks;
+        $tasks = Task::all();
         return view('/tasks', compact('tasks'));
     }
 
@@ -65,27 +66,7 @@ class TaskController extends Controller
         return redirect('/tasks');
     }
 
-    function showComment($id){
-       $taskId = $id;
-       return view('/tasks/$taskId/tasks_comment', compact('taskId'));
-
-
-    }
-
-    function addComment(Request $request, $id){
-        $taskId = $id;
-        $comment = new Comment();
-        $comment->task_Id = $taskId;
-        $comment->comment = $request->comment;
-        $comment->user_id = Auth::user()->id;
-        $comment->save();
-
-    }
-
-    function updateComment(Request $request, $id){
-
-      
-    }
+   
 
 }
 

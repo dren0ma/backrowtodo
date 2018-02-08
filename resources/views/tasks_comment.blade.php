@@ -5,7 +5,7 @@
      <div class="column is-6 is-offset-3">
         <div class="field">
             <div class="control has-icons-left">
-                <input class="input" type="text" name="task" value="{{ $task->name }}" disabled>
+                <input class="input" type="text" name="task" value="{{ $task->name }}" disabled> 
                 
                 <span class="icon is-small is-left">
                     <i class="fas fa-envelope"></i>

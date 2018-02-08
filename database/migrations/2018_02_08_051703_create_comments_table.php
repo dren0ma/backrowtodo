@@ -31,7 +31,7 @@ class CreateCommentsTable extends Migration
         $table->foreign('task_id')
             ->references('id')
             ->on('tasks')
-            ->onDelete('restrict')
+            ->onDelete('cascade')
             ->onUpdate('cascade');
         });
     }

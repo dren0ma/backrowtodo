@@ -59,7 +59,10 @@
                     <p class="title is-6">{{ $task->name }}</p>
                     <p class="subtitle is-7">by: {{$task->user->name}}</p>
                     @foreach($task->comments as $comment)
-                        <p class="subtitle is-6">- {{$comment->comment}}, {{$comment->updated_at->diffForHumans()}}</p>
+                        <p class="subtitle is-6">- {{$comment->comment}}, {{$comment->updated_at->diffForHumans()}} by {{$comment->user->name}} 
+                            <a href="{{url("/tasks/$comment->id/delcomment")}}"><span><i class="delete"></i></span></a>
+
+                        </p>
 
                     @endforeach
                     

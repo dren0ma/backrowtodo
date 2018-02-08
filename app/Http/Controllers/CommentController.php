@@ -29,5 +29,13 @@ class CommentController extends Controller
 
     }
 
+    function delComment($id){
+        $comment = Comment::find($id);
+        $comment->delete();
+
+        return redirect('/tasks');
+
+    }
+
     
 }
