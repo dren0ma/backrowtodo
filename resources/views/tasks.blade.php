@@ -51,21 +51,36 @@
         <div class="box">
             <p class="title is-4">Current Tasks</p>
         
-            
+           
+
             @foreach($tasks as $task)
             <div class="columns">
                 <div class="column is-one-third">
                     <p class="title is-6">{{ $task->name }}</p>
+                    <p class="subtitle is-7">by: {{$task->user->name}}</p>
+                    @foreach($task->comments as $comment)
+                        <p class="subtitle is-6">- {{$comment->comment}}, {{$comment->updated_at->diffForHumans()}}</p>
+
+                    @endforeach
+                    
                 </div>
                 <div class="column is-one-third">
                     <div class="field is-grouped">
-                        <p><a href='{{url("/tasks/$task->id/edit")}}'><button class="button is-info">Edit</button></a></p>
-                        <p><a class="notif" href='{{url("/tasks/$task->id/delete")}}'><button class="button is-danger">Delete</button></a></p>
-                    </div>    
+                        <p><a href='{{url("/tasks/$task->id/edit")}}'><button class="button is-info">Edit Task</button></a></p>
+
+                        <p><a class="notif" href='{{url("/tasks/$task->id/addcomment")}}'><button class="button is-warning">Add Comment</button></a></p>
+
+                        <p><a class="notif" href='{{url("/tasks/$task->id/delete")}}'><button class="button is-danger">Delete Task</button></a></p>
+                        
+
+                    </div>
+
+
                 </div>  
                 </div>  
             @endforeach
             
+        
         </div>
     </div> {{-- column --}}
 </div>

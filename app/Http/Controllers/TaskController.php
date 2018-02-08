@@ -4,21 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use App\Comment;
 use Validator;
 use Illuminate\Validation\Rule;
 use Session;
+use Auth;
 
 class TaskController extends Controller
 {
+
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     function show(){
-        $tasks = Task::all();
+        $tasks = Auth::user()->tasks;
         return view('/tasks', compact('tasks'));
     }
 
     function add(Request $request){
-        // $rules = [
-        //     'task' => [ Rule::in('task')]
-        // ];
+      
         $validate = $request->validate([
             'task' => ['required','max:255','regex:^Task.*^']
         ]);
@@ -28,6 +35,7 @@ class TaskController extends Controller
 
         $task = new Task();
         $task->name = $request->task;
+        $task->user_id = Auth::user()->id;
         $task->save();
 
         Session::flash('statusA','Task was successfully added!');
@@ -51,12 +59,34 @@ class TaskController extends Controller
 
     function update(Request $request, $id){
 
-
         $task = Task::find($id);
         $task->name = $request->task;
         $task->save();
         return redirect('/tasks');
     }
+
+    function showComment($id){
+       $taskId = $id;
+       return view('/tasks/$taskId/tasks_comment', compact('taskId'));
+
+
+    }
+
+    function addComment(Request $request, $id){
+        $taskId = $id;
+        $comment = new Comment();
+        $comment->task_Id = $taskId;
+        $comment->comment = $request->comment;
+        $comment->user_id = Auth::user()->id;
+        $comment->save();
+
+    }
+
+    function updateComment(Request $request, $id){
+
+      
+    }
+
 }
 
 
